@@ -1,5 +1,7 @@
 # Yahoo Finance MCP Server
 
+A simple MCP server for Yahoo Finance using yfinance. This server provides a set of tools to fetch stock data, news, and other financial information.
+
 ## Tools
 
 - get_ticker_info
@@ -11,30 +13,9 @@
 - get_sector
 - get_industry
 
-TODO:
-
-- An unified tool can handle all of the above tools
-
 ## Usage
 
-### GitHub
-
-```json
-{
-  "mcpServers": {
-    "yfmcp": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/narumiruna/yfinance-mcp",
-        "yfmcp"
-      ]
-    }
-  }
-}
-```
-
-### PyPI
+Add the following configuration to your MCP server configuration file.
 
 ```json
 {
@@ -42,24 +23,6 @@ TODO:
     "yfmcp": {
       "command": "uvx",
       "args": ["yfmcp"]
-    }
-  }
-}
-```
-
-### Local
-
-```json
-{
-  "mcpServers": {
-    "yfmcp": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--directory",
-        "/home/<user>/workspace/yfinance-mcp",
-        "yfmcp"
-      ]
     }
   }
 }
