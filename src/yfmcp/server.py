@@ -4,6 +4,8 @@ import yfinance as yf
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
+from .types import Market
+
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
 mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
 
@@ -38,6 +40,14 @@ def search_news(
     search = yf.Search(query, news_count=news_count)
     assert len(search.news) == news_count, f"Expected {news_count} news articles, but got {len(search.news)}"
     return str(search.news)
+
+
+@mcp.tool()
+def get_market(
+    market: Annotated[Market, Field(description=f"The market to get, available markets are {', '.join(Market)}.")],
+) -> str:
+    m = yf.Market(market.value)
+    return str(m.status) + "\n" + str(m.summary)
 
 
 def main():
