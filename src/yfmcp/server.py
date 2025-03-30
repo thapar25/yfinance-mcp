@@ -3,8 +3,9 @@ from typing import Annotated
 import yfinance as yf
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
-from yfinance.const import SECTOR_INDUSTY_MAPPING
 
+from .constants import INDUSTRY_LIST
+from .constants import SECTOR_LIST
 from .types import Market
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
@@ -57,21 +58,10 @@ def get_market(
 
 
 @mcp.tool()
-def get_sector_industy_mapping() -> str:
-    """Get the mapping of sectors to industries."""
-    return "\n".join(f"{sector}: {industry}" for sector, industry in SECTOR_INDUSTY_MAPPING.items())
-
-
-@mcp.tool()
 def get_sector(
-    sector: Annotated[
-        str, Field(description="The sector to get, use get_sector_industy_mapping() to get available sectors.")
-    ],
+    sector: Annotated[str, Field(description=f"The sector to get, available sectors are {', '.join(SECTOR_LIST)}.")],
 ) -> str:
-    """Retrieve information about a specific sector.
-
-    Use get_sector_industy_mapping() to get available sectors.
-    """
+    """Retrieve information about a specific sector."""
     s = yf.Sector(sector)
     return "\n\n".join(
         [
@@ -87,13 +77,10 @@ def get_sector(
 @mcp.tool()
 def get_industry(
     industry: Annotated[
-        str, Field(description="The industry to get, use get_sector_industy_mapping() to get available industries.")
+        str, Field(description=f"The industry to get, available industries are {', '.join(INDUSTRY_LIST)}.")
     ],
 ) -> str:
-    """Retrieve information about a specific industry.
-
-    Use get_sector_industy_mapping() to get available industries.
-    """
+    """Retrieve information about a specific industry."""
     i = yf.Industry(industry)
     return "\n\n".join(
         [

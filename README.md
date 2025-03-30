@@ -9,7 +9,6 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
 - search_quote
 - search_news
 - get_market
-- get_sector_industy_mapping
 - get_sector
 - get_industry
 
