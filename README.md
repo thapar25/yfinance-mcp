@@ -15,7 +15,8 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
 
 ## Usage
 
-Add the following configuration to your MCP server configuration file.
+1. [Install uv.](https://docs.astral.sh/uv/getting-started/installation/)
+2. Add the following configuration to your MCP server configuration file.
 
 ```json
 {
