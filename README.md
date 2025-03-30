@@ -1,5 +1,22 @@
 # Yahoo Finance MCP Server
 
+## Tools
+
+- get_ticker_info
+- get_ticker_news
+- search_quote
+- search_news
+- get_market
+- get_sector_industy_mapping
+- get_sector
+- get_industry
+
+TODO:
+
+- An unified tool can handle all of the above tools
+
+## Usage
+
 ### GitHub
 
 ```json
