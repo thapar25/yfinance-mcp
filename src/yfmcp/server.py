@@ -4,7 +4,7 @@ from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
-mcp = FastMCP("MCP Server Template", log_level="ERROR")
+mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
 
 
 @mcp.tool()

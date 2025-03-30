@@ -1,16 +1,16 @@
-# mcp-server-template
+# Yahoo Finance MCP Server
 
 ### GitHub
 
 ```json
 {
   "mcpServers": {
-    "mcp-server-template": {
+    "yfmcp": {
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/narumiruna/mcp-server-template",
-        "mcp-server-template"
+        "git+https://github.com/narumiruna/yfinance-mcp",
+        "yfmcp"
       ]
     }
   }
@@ -22,9 +22,9 @@
 ```json
 {
   "mcpServers": {
-    "mcp-server-template": {
+    "yfmcp": {
       "command": "uvx",
-      "args": ["mcp-server-template"]
+      "args": ["yfmcp"]
     }
   }
 }
@@ -35,13 +35,13 @@
 ```json
 {
   "mcpServers": {
-    "mcp-server-template": {
+    "yfmcp": {
       "command": "uv",
       "args": [
         "run",
         "--directory",
-        "/home/<user>/workspace/mcp-server-template",
-        "mcp-server-template"
+        "/home/<user>/workspace/yfinance-mcp",
+        "yfmcp"
       ]
     }
   }
