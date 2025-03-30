@@ -68,7 +68,10 @@ def get_sector(
         str, Field(description="The sector to get, use get_sector_industy_mapping() to get available sectors.")
     ],
 ) -> str:
-    """Retrieve information about a specific sector."""
+    """Retrieve information about a specific sector.
+
+    Use get_sector_industy_mapping() to get available sectors.
+    """
     s = yf.Sector(sector)
     return "\n\n".join(
         [
@@ -87,7 +90,10 @@ def get_industry(
         str, Field(description="The industry to get, use get_sector_industy_mapping() to get available industries.")
     ],
 ) -> str:
-    """Retrieve information about a specific industry."""
+    """Retrieve information about a specific industry.
+
+    Use get_sector_industy_mapping() to get available industries.
+    """
     i = yf.Industry(industry)
     return "\n\n".join(
         [
