@@ -4,7 +4,6 @@ from typing import Annotated
 import yfinance as yf
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
-from rich import print
 
 from .types import Industry
 from .types import Market

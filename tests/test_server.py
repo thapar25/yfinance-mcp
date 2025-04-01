@@ -5,7 +5,6 @@ from mcp import ClientSession
 from mcp import StdioServerParameters
 from mcp.client.stdio import stdio_client
 from mcp.types import TextContent
-from rich import print
 
 from yfmcp.types import Sector
 
