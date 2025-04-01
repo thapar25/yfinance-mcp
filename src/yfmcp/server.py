@@ -4,6 +4,7 @@ from typing import Annotated
 import yfinance as yf
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
+from yfinance.const import SECTOR_INDUSTY_MAPPING
 
 from .types import Industry
 from .types import Market
@@ -49,7 +50,7 @@ def search_news(
     return str(search.news)
 
 
-@mcp.tool()
+# @mcp.tool()
 def get_market(
     market: Annotated[Market, Field(description="The market to get.")],
 ) -> str:
@@ -136,6 +137,29 @@ def get_top_companies(
         return f"No top companies available for {sector.value} sector."
 
     return df.iloc[:top_n].to_json(orient="records")
+
+
+@mcp.tool()
+def get_top_growth_companies(
+    sector: Annotated[Sector, Field(description="The sector to get")],
+    top_n: Annotated[int, Field(description="Number of top growth companies to retrieve")],
+) -> str:
+    results = []
+
+    for industry_name in SECTOR_INDUSTY_MAPPING[sector.value]:
+        industry = yf.Industry(industry_name)
+
+        df = industry.top_growth_companies
+        if df is None:
+            continue
+
+        results.append(
+            {
+                "industry": industry_name,
+                "top_growth_companies": df.iloc[:top_n].to_json(orient="records"),
+            }
+        )
+    return json.dumps(results, ensure_ascii=False)
 
 
 def main():
