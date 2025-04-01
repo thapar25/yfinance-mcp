@@ -1,3 +1,4 @@
+import json
 from typing import Annotated
 
 import yfinance as yf
@@ -16,7 +17,7 @@ mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
 def get_ticker_info(symbol: Annotated[str, Field(description="The stock symbol")]) -> str:
     """Retrieve information about a specific stock symbol using Yahoo Finance API."""
     ticker = yf.Ticker(symbol)
-    return str(ticker.info)
+    return json.dumps(ticker.info, ensure_ascii=False)
 
 
 @mcp.tool()
