@@ -146,8 +146,6 @@ def analyze_sentiment(
     """You are a sentiment analysis tool.
     Based on the provided rationale, analyze the sentiment for the given stock symbol.
     Please ensure that your analysis is objective and unbiased.
-
-    Return the result in the following formatted output.
     """
     return "\n".join(
         [
