@@ -5,9 +5,9 @@ import yfinance as yf
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
-from .constants import INDUSTRY_LIST
-from .constants import SECTOR_LIST
+from .types import Industry
 from .types import Market
+from .types import Sector
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
 mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
@@ -51,7 +51,7 @@ def search_news(
 
 @mcp.tool()
 def get_market(
-    market: Annotated[Market, Field(description=f"The market to get, available markets are {', '.join(Market)}.")],
+    market: Annotated[Market, Field(description="The market to get.")],
 ) -> str:
     """Retrieve information about a specific market."""
     m = yf.Market(market.value)
@@ -60,7 +60,7 @@ def get_market(
 
 @mcp.tool()
 def get_sector(
-    sector: Annotated[str, Field(description=f"The sector to get, available sectors are {', '.join(SECTOR_LIST)}.")],
+    sector: Annotated[Sector, Field(description="The sector to get.")],
 ) -> str:
     """Retrieve information about a specific sector."""
     s = yf.Sector(sector)
@@ -77,9 +77,7 @@ def get_sector(
 
 @mcp.tool()
 def get_industry(
-    industry: Annotated[
-        str, Field(description=f"The industry to get, available industries are {', '.join(INDUSTRY_LIST)}.")
-    ],
+    industry: Annotated[Industry, Field(description="The industry to get")],
 ) -> str:
     """Retrieve information about a specific industry."""
     i = yf.Industry(industry)
