@@ -57,10 +57,19 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
     - `top_n` (number): Number of top growth companies to retrieve.
 
 - **get_top_performing_companies**
+
   - Retrieve the top performing companies in a specific sector.
   - Inputs:
     - `sector` (string): The sector to get companies for.
     - `top_n` (number): Number of top performing companies to retrieve.
+
+- **analyze_sentiment**
+  - Analyze sentiment for a given stock symbol based on provided rationale.
+  - Inputs:
+    - `symbol` (string): The stock symbol.
+    - `reasoning` (string): The rationale behind the sentiment analysis.
+    - `sentiment` (string): The sentiment label ('positive', 'negative', or 'neutral').
+    - `score` (number): The sentiment score ranging from -1 to 1.
 
 ## Usage
 
