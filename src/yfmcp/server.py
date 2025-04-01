@@ -6,8 +6,6 @@ from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 from yfinance.const import SECTOR_INDUSTY_MAPPING
 
-from .types import Industry
-from .types import Market
 from .types import Sector
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
@@ -50,32 +48,6 @@ def search_news(
     return str(search.news)
 
 
-# @mcp.tool()
-def get_market(
-    market: Annotated[Market, Field(description="The market to get.")],
-) -> str:
-    """Retrieve information about a specific market."""
-    m = yf.Market(market.value)
-    return str(m.status) + "\n" + str(m.summary)
-
-
-# @mcp.tool()
-def get_sector_info(
-    sector: Annotated[Sector, Field(description="The sector to get.")],
-) -> str:
-    """Retrieve information about a specific sector."""
-    s = yf.Sector(sector.value)
-    return "\n\n".join(
-        [
-            f"<overview>\n{s.overview}\n</overview>",
-            f"<top_companies>\n{s.top_companies}\n</top_companies>",
-            f"<top_etfs>\n{s.top_etfs}\n</top_etfs>",
-            f"<top_mutual_funds>\n{s.top_mutual_funds}\n</top_mutual_funds>",
-            f"<research_reports>\n{s.research_reports}\n</research_reports>",
-        ]
-    )
-
-
 @mcp.tool()
 def get_top_etfs(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
     """Retrieve the top ETFs in a specific sector."""
@@ -88,41 +60,6 @@ def get_top_mutual_funds(sector: Annotated[Sector, Field(description="The sector
     """Retrieve the top mutual funds in a specific sector."""
     s = yf.Sector(sector.value)
     return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_mutual_funds.items())
-
-
-# @mcp.tool()
-def get_industry_info(
-    industry: Annotated[Industry, Field(description="The industry to get")],
-) -> str:
-    """Retrieve information about a specific industry."""
-    i = yf.Industry(industry.value)
-    return "\n\n".join(
-        [
-            f"<overview>\n{i.overview}\n</overview>",
-            f"<top_growth_companies>\n{i.top_growth_companies}\n</top_growth_companies>",
-            f"<top_companies>\n{i.top_companies}\n</top_companies>",
-            f"<top_performing_companies>\n{i.top_performing_companies}\n</top_performing_companies>",
-            f"<research_reports>\n{i.research_reports}\n</research_reports>",
-        ]
-    )
-
-
-# @mcp.tool()
-def get_research_reports(
-    sector: Annotated[Sector | None, Field(description="The sector to get")] = None,
-    industry: Annotated[Industry | None, Field(description="The industry to get")] = None,
-) -> str:
-    if industry is not None:
-        resp = yf.Industry(industry.value)
-    elif sector is not None:
-        resp = yf.Sector(sector.value)
-    else:
-        raise ValueError("Either sector or industry must be provided.")
-
-    if not resp.research_reports:
-        return "No research reports available."
-
-    return str(resp.research_reports)
 
 
 @mcp.tool()
