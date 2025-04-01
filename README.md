@@ -8,7 +8,6 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
 - get_ticker_news
 - search_quote
 - search_news
-- get_market
 - get_top_etfs
 - get_top_mutual_funds
 - get_top_companies
