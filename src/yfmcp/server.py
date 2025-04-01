@@ -58,8 +58,8 @@ def get_market(
     return str(m.status) + "\n" + str(m.summary)
 
 
-@mcp.tool()
-def get_sector(
+# @mcp.tool()
+def get_sector_info(
     sector: Annotated[Sector, Field(description="The sector to get.")],
 ) -> str:
     """Retrieve information about a specific sector."""
@@ -76,7 +76,21 @@ def get_sector(
 
 
 @mcp.tool()
-def get_industry(
+def get_top_etfs(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
+    """Retrieve the top ETFs in a specific sector."""
+    s = yf.Sector(sector.value)
+    return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_etfs.items())
+
+
+@mcp.tool()
+def get_top_mutual_funds(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
+    """Retrieve the top mutual funds in a specific sector."""
+    s = yf.Sector(sector.value)
+    return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_mutual_funds.items())
+
+
+# @mcp.tool()
+def get_industry_info(
     industry: Annotated[Industry, Field(description="The industry to get")],
 ) -> str:
     """Retrieve information about a specific industry."""
@@ -90,6 +104,24 @@ def get_industry(
             f"<research_reports>\n{i.research_reports}\n</research_reports>",
         ]
     )
+
+
+# @mcp.tool()
+def get_research_reports(
+    sector: Annotated[Sector | None, Field(description="The sector to get")] = None,
+    industry: Annotated[Industry | None, Field(description="The industry to get")] = None,
+) -> str:
+    if industry is not None:
+        resp = yf.Industry(industry.value)
+    elif sector is not None:
+        resp = yf.Sector(sector.value)
+    else:
+        raise ValueError("Either sector or industry must be provided.")
+
+    if not resp.research_reports:
+        return "No research reports available."
+
+    return str(resp.research_reports)
 
 
 @mcp.tool()
