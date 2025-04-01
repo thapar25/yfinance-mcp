@@ -77,3 +77,14 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
   }
 }
 ```
+
+```json
+{
+  "mcpServers": {
+    "yfmcp": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "narumi/yfinance-mcp"]
+    }
+  }
+}
+```
