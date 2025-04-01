@@ -51,14 +51,14 @@ def search_news(
 @mcp.tool()
 def get_top_etfs(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
     """Retrieve the top ETFs in a specific sector."""
-    s = yf.Sector(sector.value)
+    s = yf.Sector(sector)
     return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_etfs.items())
 
 
 @mcp.tool()
 def get_top_mutual_funds(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
     """Retrieve the top mutual funds in a specific sector."""
-    s = yf.Sector(sector.value)
+    s = yf.Sector(sector)
     return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_mutual_funds.items())
 
 
@@ -68,10 +68,10 @@ def get_top_companies(
     top_n: Annotated[int, Field(description="Number of top companies to retrieve")],
 ) -> str:
     """Retrieve the top companies in a specific sector."""
-    s = yf.Sector(sector.value)
+    s = yf.Sector(sector)
     df = s.top_companies
     if df is None:
-        return f"No top companies available for {sector.value} sector."
+        return f"No top companies available for {sector} sector."
 
     return df.iloc[:top_n].to_json(orient="records")
 
@@ -83,7 +83,7 @@ def get_top_growth_companies(
 ) -> str:
     results = []
 
-    for industry_name in SECTOR_INDUSTY_MAPPING[sector.value]:
+    for industry_name in SECTOR_INDUSTY_MAPPING[sector]:
         industry = yf.Industry(industry_name)
 
         df = industry.top_growth_companies
@@ -106,7 +106,7 @@ def get_top_performing_companies(
 ) -> str:
     results = []
 
-    for industry_name in SECTOR_INDUSTY_MAPPING[sector.value]:
+    for industry_name in SECTOR_INDUSTY_MAPPING[sector]:
         industry = yf.Industry(industry_name)
 
         df = industry.top_performing_companies

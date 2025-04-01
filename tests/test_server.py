@@ -6,15 +6,13 @@ from mcp import StdioServerParameters
 from mcp.client.stdio import stdio_client
 from mcp.types import TextContent
 
-from yfmcp.types import Sector
-
 
 @pytest.fixture
 def server_params() -> StdioServerParameters:
     return StdioServerParameters(command="yfmcp")
 
 
-@pytest.mark.anyio
+@pytest.mark.asyncio
 async def test_list_tools(server_params: StdioServerParameters) -> None:
     async with (
         stdio_client(server_params) as (read, write),
@@ -26,7 +24,7 @@ async def test_list_tools(server_params: StdioServerParameters) -> None:
         assert len(result.tools) > 0
 
 
-@pytest.mark.anyio
+@pytest.mark.asyncio
 async def test_get_ticker_info(server_params: StdioServerParameters) -> None:
     async with (
         stdio_client(server_params) as (read, write),
@@ -44,7 +42,7 @@ async def test_get_ticker_info(server_params: StdioServerParameters) -> None:
         assert data["symbol"] == symbol
 
 
-@pytest.mark.anyio
+@pytest.mark.asyncio
 async def test_get_top_companies(server_params: StdioServerParameters) -> None:
     async with (
         stdio_client(server_params) as (read, write),
@@ -52,10 +50,10 @@ async def test_get_top_companies(server_params: StdioServerParameters) -> None:
     ):
         await session.initialize()
 
-        sector = Sector.TECHNOLOGY
+        sector = "technology"
         max_results = 5
 
-        result = await session.call_tool("get_top_companies", arguments={"sector": sector, "max_results": max_results})
+        result = await session.call_tool("get_top_companies", arguments={"sector": sector, "top_n": max_results})
         assert len(result.content) == 1
         assert isinstance(result.content[0], TextContent)
 
