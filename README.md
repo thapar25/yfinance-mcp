@@ -13,6 +13,7 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
 - get_top_mutual_funds
 - get_top_companies
 - get_top_growth_companies
+- get_top_performing_companies
 
 ## Usage
 

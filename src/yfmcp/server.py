@@ -162,5 +162,28 @@ def get_top_growth_companies(
     return json.dumps(results, ensure_ascii=False)
 
 
+@mcp.tool()
+def get_top_performing_companies(
+    sector: Annotated[Sector, Field(description="The sector to get")],
+    top_n: Annotated[int, Field(description="Number of top performing companies to retrieve")],
+) -> str:
+    results = []
+
+    for industry_name in SECTOR_INDUSTY_MAPPING[sector.value]:
+        industry = yf.Industry(industry_name)
+
+        df = industry.top_performing_companies
+        if df is None:
+            continue
+
+        results.append(
+            {
+                "industry": industry_name,
+                "top_performing_companies": df.iloc[:top_n].to_json(orient="records"),
+            }
+        )
+    return json.dumps(results, ensure_ascii=False)
+
+
 def main():
     mcp.run()
