@@ -58,4 +58,4 @@ async def test_get_top_companies(server_params: StdioServerParameters) -> None:
         assert isinstance(result.content[0], TextContent)
 
         data = json.loads(result.content[0].text)
-        assert len(data) == max_results
+        assert len(data) == top_n
