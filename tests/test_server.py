@@ -51,9 +51,9 @@ async def test_get_top_companies(server_params: StdioServerParameters) -> None:
         await session.initialize()
 
         sector = "technology"
-        max_results = 5
+        top_n = 5
 
-        result = await session.call_tool("get_top_companies", arguments={"sector": sector, "top_n": max_results})
+        result = await session.call_tool("get_top_companies", arguments={"sector": sector, "top_n": top_n})
         assert len(result.content) == 1
         assert isinstance(result.content[0], TextContent)
 
