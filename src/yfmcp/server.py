@@ -1,6 +1,5 @@
 import json
 from typing import Annotated
-from typing import Literal
 
 import yfinance as yf
 from mcp.server.fastmcp import FastMCP
@@ -123,38 +122,6 @@ def get_top_performing_companies(
             }
         )
     return json.dumps(results, ensure_ascii=False)
-
-
-@mcp.tool()
-def analyze_sentiment(
-    symbol: Annotated[str, Field(description="The stock symbol")],
-    reasoning: Annotated[str, Field(description="The rationale behind the sentiment analysis")],
-    sentiment: Annotated[
-        Literal["positive", "negative", "neutral"],
-        Field(description="The sentiment label, valid values are 'positive', 'negative', or 'neutral'"),
-    ],
-    score: Annotated[
-        float,
-        Field(
-            description=(
-                "The sentiment score ranging from -1 to 1, where -1 is extremely negative, "
-                "1 is extremely positive, and 0 is neutral"
-            )
-        ),
-    ],
-) -> str:
-    """You are a sentiment analysis tool.
-    Based on the provided rationale, analyze the sentiment for the given stock symbol.
-    Please ensure that your analysis is objective and unbiased.
-    """
-    return "\n".join(
-        [
-            f"Stock Symbol: {symbol}",
-            f"Rationale: {reasoning}",
-            f"Sentiment: {sentiment}",
-            f"Sentiment Score: {score}",
-        ]
-    )
 
 
 def main():
