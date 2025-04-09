@@ -6,59 +6,59 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
 
 - **get_ticker_info**
 
-  - Retrieve information about a specific stock symbol using Yahoo Finance API.
+  - Retrieve stock data including company info, financials, trading metrics and governance data.
   - Inputs:
     - `symbol` (string): The stock symbol.
 
 - **get_ticker_news**
 
-  - Fetch news articles for a given stock ticker symbol.
+  - Fetches recent news articles related to a specific stock symbol with title, content, and source details.
   - Inputs:
     - `symbol` (string): The stock symbol.
 
 - **search_quote**
 
-  - Search for quotes using a query string.
+  - Search for stock quotes with company name, exchange, sector and industry information by keyword.
   - Inputs:
     - `query` (string): The search query.
     - `max_results` (number, optional): Maximum number of results (default 8).
 
 - **search_news**
 
-  - Search for news articles using a query string.
+  - Search for financial news articles matching a keyword with title, source and publication details.
   - Inputs:
     - `query` (string): The search query.
     - `news_count` (number, optional): Number of news articles (default 8).
 
 - **get_top_etfs**
 
-  - Retrieve the top ETFs in a specific sector.
+  - Retrieve popular ETFs for a sector, returned as a list in 'SYMBOL: ETF Name' format.
   - Inputs:
     - `sector` (string): The sector to get ETFs for.
 
 - **get_top_mutual_funds**
 
-  - Retrieve the top mutual funds in a specific sector.
+  - Retrieve popular mutual funds for a sector, returned as a list in 'SYMBOL: Fund Name' format.
   - Inputs:
     - `sector` (string): The sector to get mutual funds for.
 
 - **get_top_companies**
 
-  - Retrieve the top companies in a specific sector.
+  - Get top companies in a sector with name, analyst rating, and market weight as JSON array.
   - Inputs:
     - `sector` (string): The sector to get companies for.
     - `top_n` (number): Number of top companies to retrieve.
 
 - **get_top_growth_companies**
 
-  - Retrieve the top growth companies in a specific sector.
+  - Get top growth companies grouped by industry within a sector as JSON array with growth metrics.
   - Inputs:
     - `sector` (string): The sector to get companies for.
     - `top_n` (number): Number of top growth companies to retrieve.
 
 - **get_top_performing_companies**
 
-  - Retrieve the top performing companies in a specific sector.
+  - Get top performing companies grouped by industry within a sector as JSON array with performance metrics.
   - Inputs:
     - `sector` (string): The sector to get companies for.
     - `top_n` (number): Number of top performing companies to retrieve.
