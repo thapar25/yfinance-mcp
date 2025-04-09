@@ -43,7 +43,7 @@ async def test_get_ticker_info(server_params: StdioServerParameters) -> None:
 
 
 @pytest.mark.asyncio
-async def test_get_top_companies(server_params: StdioServerParameters) -> None:
+async def test_get_top(server_params: StdioServerParameters) -> None:
     async with (
         stdio_client(server_params) as (read, write),
         ClientSession(read, write) as session,
@@ -53,7 +53,9 @@ async def test_get_top_companies(server_params: StdioServerParameters) -> None:
         sector = "technology"
         top_n = 5
 
-        result = await session.call_tool("get_top_companies", arguments={"sector": sector, "top_n": top_n})
+        result = await session.call_tool(
+            "get_top", arguments={"sector": sector, "top_n": top_n, "top_type": "top_companies"}
+        )
         assert len(result.content) == 1
         assert isinstance(result.content[0], TextContent)
 
