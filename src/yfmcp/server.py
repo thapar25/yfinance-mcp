@@ -6,6 +6,7 @@ from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 from yfinance.const import SECTOR_INDUSTY_MAPPING
 
+from yfmcp.types import SearchType
 from yfmcp.types import Sector
 from yfmcp.types import TopType
 
@@ -29,24 +30,21 @@ def get_ticker_news(symbol: Annotated[str, Field(description="The stock symbol")
 
 
 @mcp.tool()
-def search_quote(
-    query: Annotated[str, Field(description="The search query")],
-    max_results: Annotated[int, Field(description="The maximum number of results")] = 8,
+def search(
+    query: Annotated[str, Field(description="The search query (ticker symbol or company name)")],
+    search_type: Annotated[SearchType, Field(description="Type of search results to retrieve")],
 ) -> str:
-    """Search for stock quotes with company name, exchange, sector and industry information by keyword."""
-    search = yf.Search(query, max_results=max_results)
-    return str(search.quotes)
-
-
-@mcp.tool()
-def search_news(
-    query: Annotated[str, Field(description="The search query")],
-    news_count: Annotated[int, Field(description="The number of news articles")] = 8,
-) -> str:
-    """Search for financial news articles matching a keyword with title, source and publication details."""
-    search = yf.Search(query, news_count=news_count)
-    assert len(search.news) == news_count, f"Expected {news_count} news articles, but got {len(search.news)}"
-    return str(search.news)
+    """Fetches and organizes search results from Yahoo Finance, including stock quotes and news articles."""
+    s = yf.Search(query)
+    match search_type.lower():
+        case "all":
+            return json.dumps(s.all, ensure_ascii=False)
+        case "quotes":
+            return json.dumps(s.quotes, ensure_ascii=False)
+        case "news":
+            return json.dumps(s.news, ensure_ascii=False)
+        case _:
+            return "Invalid output_type. Use 'all', 'quotes', or 'news'."
 
 
 def get_top_etfs(
