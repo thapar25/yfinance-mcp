@@ -7,6 +7,7 @@ from pydantic import Field
 from yfinance.const import SECTOR_INDUSTY_MAPPING
 
 from yfmcp.types import Sector
+from yfmcp.types import TopType
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
 mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
@@ -49,15 +50,30 @@ def search_news(
 
 
 @mcp.tool()
-def get_top_etfs(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
+def get_top_etfs(
+    sector: Annotated[Sector, Field(description="The sector to get")],
+    top_n: Annotated[int, Field(description="Number of top ETFs to retrieve")],
+) -> str:
     """Retrieve popular ETFs for a sector, returned as a list in 'SYMBOL: ETF Name' format."""
+    if top_n < 1:
+        return "top_n must be greater than 0"
+
     s = yf.Sector(sector)
-    return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_etfs.items())
+
+    result = [f"{symbol}: {name}" for symbol, name in s.top_etfs.items()]
+
+    return "\n".join(result[:top_n])
 
 
 @mcp.tool()
-def get_top_mutual_funds(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
+def get_top_mutual_funds(
+    sector: Annotated[Sector, Field(description="The sector to get")],
+    top_n: Annotated[int, Field(description="Number of top mutual funds to retrieve")],
+) -> str:
     """Retrieve popular mutual funds for a sector, returned as a list in 'SYMBOL: Fund Name' format."""
+    if top_n < 1:
+        return "top_n must be greater than 0"
+
     s = yf.Sector(sector)
     return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_mutual_funds.items())
 
@@ -68,6 +84,9 @@ def get_top_companies(
     top_n: Annotated[int, Field(description="Number of top companies to retrieve")],
 ) -> str:
     """Get top companies in a sector with name, analyst rating, and market weight as JSON array."""
+    if top_n < 1:
+        return "top_n must be greater than 0"
+
     s = yf.Sector(sector)
     df = s.top_companies
     if df is None:
@@ -82,6 +101,9 @@ def get_top_growth_companies(
     top_n: Annotated[int, Field(description="Number of top growth companies to retrieve")],
 ) -> str:
     """Get top growth companies grouped by industry within a sector as JSON array with growth metrics."""
+    if top_n < 1:
+        return "top_n must be greater than 0"
+
     results = []
 
     for industry_name in SECTOR_INDUSTY_MAPPING[sector]:
@@ -106,6 +128,9 @@ def get_top_performing_companies(
     top_n: Annotated[int, Field(description="Number of top performing companies to retrieve")],
 ) -> str:
     """Get top performing companies grouped by industry within a sector as JSON array with performance metrics."""
+    if top_n < 1:
+        return "top_n must be greater than 0"
+
     results = []
 
     for industry_name in SECTOR_INDUSTY_MAPPING[sector]:
@@ -122,6 +147,28 @@ def get_top_performing_companies(
             }
         )
     return json.dumps(results, ensure_ascii=False)
+
+
+@mcp.tool()
+def get_top(
+    sector: Annotated[Sector, Field(description="The sector to get")],
+    top_type: Annotated[TopType, Field(description="Type of top companies to retrieve")],
+    top_n: Annotated[int, Field(description="Number of top entities to retrieve (limit the results)")] = 10,
+) -> str:
+    """Get top entities (ETFs, mutual funds, companies, growth companies, or performing companies) in a sector."""
+    match top_type:
+        case "top_etfs":
+            return get_top_etfs(sector, top_n)
+        case "top_mutual_funds":
+            return get_top_mutual_funds(sector, top_n)
+        case "top_companies":
+            return get_top_companies(sector, top_n)
+        case "top_growth_companies":
+            return get_top_growth_companies(sector, top_n)
+        case "top_performing_companies":
+            return get_top_performing_companies(sector, top_n)
+        case _:
+            return "Invalid top_type"
 
 
 def main():
