@@ -16,19 +16,12 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
   - Inputs:
     - `symbol` (string): The stock symbol.
 
-- **search_quote**
+- **search**
 
-  - Search for stock quotes with company name, exchange, sector and industry information by keyword.
+  - Fetches and organizes search results from Yahoo Finance, including stock quotes and news articles.
   - Inputs:
-    - `query` (string): The search query.
-    - `max_results` (number, optional): Maximum number of results (default 8).
-
-- **search_news**
-
-  - Search for financial news articles matching a keyword with title, source and publication details.
-  - Inputs:
-    - `query` (string): The search query.
-    - `news_count` (number, optional): Number of news articles (default 8).
+    - `query` (string): The search query (ticker symbol or company name).
+    - `search_type` (string): Type of search results to retrieve (options: "all", "quotes", "news").
 
 - **get_top**
 
