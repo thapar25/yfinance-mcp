@@ -30,38 +30,13 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
     - `query` (string): The search query.
     - `news_count` (number, optional): Number of news articles (default 8).
 
-- **get_top_etfs**
+- **get_top**
 
-  - Retrieve popular ETFs for a sector, returned as a list in 'SYMBOL: ETF Name' format.
+  - Get top entities (ETFs, mutual funds, companies, growth companies, or performing companies) in a sector.
   - Inputs:
-    - `sector` (string): The sector to get ETFs for.
-
-- **get_top_mutual_funds**
-
-  - Retrieve popular mutual funds for a sector, returned as a list in 'SYMBOL: Fund Name' format.
-  - Inputs:
-    - `sector` (string): The sector to get mutual funds for.
-
-- **get_top_companies**
-
-  - Get top companies in a sector with name, analyst rating, and market weight as JSON array.
-  - Inputs:
-    - `sector` (string): The sector to get companies for.
-    - `top_n` (number): Number of top companies to retrieve.
-
-- **get_top_growth_companies**
-
-  - Get top growth companies grouped by industry within a sector as JSON array with growth metrics.
-  - Inputs:
-    - `sector` (string): The sector to get companies for.
-    - `top_n` (number): Number of top growth companies to retrieve.
-
-- **get_top_performing_companies**
-
-  - Get top performing companies grouped by industry within a sector as JSON array with performance metrics.
-  - Inputs:
-    - `sector` (string): The sector to get companies for.
-    - `top_n` (number): Number of top performing companies to retrieve.
+    - `sector` (string): The sector to get.
+    - `top_type` (string): Type of top companies to retrieve (options: "top_etfs", "top_mutual_funds", "top_companies", "top_growth_companies", "top_performing_companies").
+    - `top_n` (number, optional): Number of top entities to retrieve (default 10).
 
 ## Usage
 
