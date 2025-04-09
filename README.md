@@ -40,8 +40,12 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
 
 ## Usage
 
-1. [Install uv.](https://docs.astral.sh/uv/getting-started/installation/)
-2. Add the following configuration to your MCP server configuration file.
+You can use this MCP server either via uv (Python package installer) or Docker.
+
+### Via uv
+
+1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
+2. Add the following configuration to your MCP server configuration file:
 
 ```json
 {
@@ -53,6 +57,10 @@ A simple MCP server for Yahoo Finance using yfinance. This server provides a set
   }
 }
 ```
+
+### Via Docker
+
+Add the following configuration to your MCP server configuration file:
 
 ```json
 {
