@@ -49,7 +49,6 @@ def search_news(
     return str(search.news)
 
 
-@mcp.tool()
 def get_top_etfs(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top ETFs to retrieve")],
@@ -65,7 +64,6 @@ def get_top_etfs(
     return "\n".join(result[:top_n])
 
 
-@mcp.tool()
 def get_top_mutual_funds(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top mutual funds to retrieve")],
@@ -78,7 +76,6 @@ def get_top_mutual_funds(
     return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_mutual_funds.items())
 
 
-@mcp.tool()
 def get_top_companies(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top companies to retrieve")],
@@ -95,7 +92,6 @@ def get_top_companies(
     return df.iloc[:top_n].to_json(orient="records")
 
 
-@mcp.tool()
 def get_top_growth_companies(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top growth companies to retrieve")],
@@ -122,7 +118,6 @@ def get_top_growth_companies(
     return json.dumps(results, ensure_ascii=False)
 
 
-@mcp.tool()
 def get_top_performing_companies(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top performing companies to retrieve")],
