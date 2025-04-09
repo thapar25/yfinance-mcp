@@ -14,14 +14,14 @@ mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
 
 @mcp.tool()
 def get_ticker_info(symbol: Annotated[str, Field(description="The stock symbol")]) -> str:
-    """Retrieve information about a specific stock symbol using Yahoo Finance API."""
+    """Retrieve stock data including company info, financials, trading metrics and governance data."""
     ticker = yf.Ticker(symbol)
     return json.dumps(ticker.info, ensure_ascii=False)
 
 
 @mcp.tool()
 def get_ticker_news(symbol: Annotated[str, Field(description="The stock symbol")]) -> str:
-    """Fetches news articles for a given stock ticker symbol."""
+    """Fetches recent news articles related to a specific stock symbol with title, content, and source details."""
     ticker = yf.Ticker(symbol)
     news = ticker.get_news()
     return str(news)
@@ -32,7 +32,7 @@ def search_quote(
     query: Annotated[str, Field(description="The search query")],
     max_results: Annotated[int, Field(description="The maximum number of results")] = 8,
 ) -> str:
-    """Search for quotes using a query string."""
+    """Search for stock quotes with company name, exchange, sector and industry information by keyword."""
     search = yf.Search(query, max_results=max_results)
     return str(search.quotes)
 
@@ -42,7 +42,7 @@ def search_news(
     query: Annotated[str, Field(description="The search query")],
     news_count: Annotated[int, Field(description="The number of news articles")] = 8,
 ) -> str:
-    """Search for news articles using a query string."""
+    """Search for financial news articles matching a keyword with title, source and publication details."""
     search = yf.Search(query, news_count=news_count)
     assert len(search.news) == news_count, f"Expected {news_count} news articles, but got {len(search.news)}"
     return str(search.news)
@@ -50,14 +50,14 @@ def search_news(
 
 @mcp.tool()
 def get_top_etfs(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
-    """Retrieve the top ETFs in a specific sector."""
+    """Retrieve popular ETFs for a sector, returned as a list in 'SYMBOL: ETF Name' format."""
     s = yf.Sector(sector)
     return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_etfs.items())
 
 
 @mcp.tool()
 def get_top_mutual_funds(sector: Annotated[Sector, Field(description="The sector to get")]) -> str:
-    """Retrieve the top mutual funds in a specific sector."""
+    """Retrieve popular mutual funds for a sector, returned as a list in 'SYMBOL: Fund Name' format."""
     s = yf.Sector(sector)
     return "\n".join(f"{symbol}: {name}" for symbol, name in s.top_mutual_funds.items())
 
@@ -67,7 +67,7 @@ def get_top_companies(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top companies to retrieve")],
 ) -> str:
-    """Retrieve the top companies in a specific sector."""
+    """Get top companies in a sector with name, analyst rating, and market weight as JSON array."""
     s = yf.Sector(sector)
     df = s.top_companies
     if df is None:
@@ -81,7 +81,7 @@ def get_top_growth_companies(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top growth companies to retrieve")],
 ) -> str:
-    """Retrieve the top growth companies in a specific sector."""
+    """Get top growth companies grouped by industry within a sector as JSON array with growth metrics."""
     results = []
 
     for industry_name in SECTOR_INDUSTY_MAPPING[sector]:
@@ -105,7 +105,7 @@ def get_top_performing_companies(
     sector: Annotated[Sector, Field(description="The sector to get")],
     top_n: Annotated[int, Field(description="Number of top performing companies to retrieve")],
 ) -> str:
-    """Retrieve the top performing companies in a specific sector."""
+    """Get top performing companies grouped by industry within a sector as JSON array with performance metrics."""
     results = []
 
     for industry_name in SECTOR_INDUSTY_MAPPING[sector]:
