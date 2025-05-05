@@ -1,7 +1,9 @@
 import json
+from datetime import datetime
 from typing import Annotated
 
 import yfinance as yf
+from loguru import logger
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 from yfinance.const import SECTOR_INDUSTY_MAPPING
@@ -18,7 +20,21 @@ mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
 def get_ticker_info(symbol: Annotated[str, Field(description="The stock symbol")]) -> str:
     """Retrieve stock data including company info, financials, trading metrics and governance data."""
     ticker = yf.Ticker(symbol)
-    return json.dumps(ticker.info, ensure_ascii=False)
+
+    # Convert timestamps to human-readable format
+    info = ticker.info
+    for key, value in info.items():
+        if not isinstance(key, str):
+            continue
+
+        if key.lower().endswith(("date", "start", "end", "timestamp", "time", "quarter")):
+            try:
+                info[key] = datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")
+            except Exception as e:
+                logger.error("Unable to convert {}: {} to datetime, got error: {}", key, value, e)
+                continue
+
+    return json.dumps(info, ensure_ascii=False)
 
 
 @mcp.tool()
