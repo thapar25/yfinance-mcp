@@ -2,6 +2,10 @@
 
 A simple MCP server for Yahoo Finance using [yfinance](https://github.com/ranaroussi/yfinance). This server provides a set of tools to fetch stock data, news, and other financial information.
 
+<a href="https://glama.ai/mcp/servers/@narumiruna/yfinance-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@narumiruna/yfinance-mcp/badge" />
+</a>
+
 ## Tools
 
 - **get_ticker_info**
