@@ -45,7 +45,7 @@ You can use this MCP server either via uv (Python package installer) or Docker.
   "mcpServers": {
     "yfmcp": {
       "command": "uvx",
-      "args": ["yfmcp"]
+      "args": ["-U", "yfmcp"]
     }
   }
 }
