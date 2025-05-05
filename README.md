@@ -1,6 +1,6 @@
 # Yahoo Finance MCP Server
 
-A simple MCP server for Yahoo Finance using yfinance. This server provides a set of tools to fetch stock data, news, and other financial information.
+A simple MCP server for Yahoo Finance using [yfinance](https://github.com/ranaroussi/yfinance). This server provides a set of tools to fetch stock data, news, and other financial information.
 
 ## Tools
 
