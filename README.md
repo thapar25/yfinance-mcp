@@ -35,6 +35,14 @@ A simple MCP server for Yahoo Finance using [yfinance](https://github.com/ranaro
     - `top_type` (string): Type of top companies to retrieve (options: "top_etfs", "top_mutual_funds", "top_companies", "top_growth_companies", "top_performing_companies").
     - `top_n` (number, optional): Number of top entities to retrieve (default 10).
 
+- **get_price_history**
+
+  - Fetch historical price data for a given stock symbol over a specified period and interval.
+  - Inputs:
+    - `symbol` (string): The stock symbol.
+    - `period` (string, optional): Time period to retrieve data for (e.g. '1d', '1mo', '1y'). Default is '1mo'.
+    - `interval` (string, optional): Data interval frequency (e.g. '1d', '1h', '1m'). Default is '1d'.
+
 ## Usage
 
 You can use this MCP server either via uv (Python package installer) or Docker.
@@ -68,4 +76,3 @@ Add the following configuration to your MCP server configuration file:
     }
   }
 }
-```
