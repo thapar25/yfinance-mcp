@@ -8,6 +8,8 @@ from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 from yfinance.const import SECTOR_INDUSTY_MAPPING
 
+from yfmcp.types import Interval
+from yfmcp.types import Period
 from yfmcp.types import SearchType
 from yfmcp.types import Sector
 from yfmcp.types import TopType
@@ -180,5 +182,21 @@ def get_top(
             return "Invalid top_type"
 
 
-def main():
+@mcp.tool()
+def get_price_history(
+    symbol: Annotated[str, Field(description="The stock symbol")],
+    period: Annotated[Period, Field(description="Time period to retrieve data for (e.g. '1d', '1mo', '1y')")] = "1mo",
+    interval: Annotated[Interval, Field(description="Data interval frequency (e.g. '1d', '1h', '1m')")] = "1d",
+) -> str:
+    """Fetch historical price data for a given stock symbol over a specified period and interval."""
+    ticker = yf.Ticker(symbol)
+    df = ticker.history(
+        period=period,
+        interval=interval,
+        rounding=True,
+    )
+    return df.to_markdown()
+
+
+def main() -> None:
     mcp.run()
