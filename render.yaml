@@ -3,9 +3,9 @@ previews:
 
 services:
 - type: web
-  name: YFinance-MCP
+  name: yfinance-mcp
   runtime: docker
-  repo: https://github.com/thapar25/yfinance-mcp.git
+  repo: https://github.com/thapar25/yfinance-mcp
   plan: free
   region: oregon
   healthCheckPath: /health
