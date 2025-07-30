@@ -9,5 +9,5 @@ services:
   healthCheckPath: /health
   dockerContext: .
   dockerfilePath: ./Dockerfile
-  autoDeployTrigger: commit
+  autoDeploy: false
 version: "1"

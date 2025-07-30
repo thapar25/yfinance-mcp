@@ -1,10 +1,18 @@
-# Yahoo Finance MCP Server
+# Yahoo Finance MCP Server (Remote only)
 
 A simple MCP server for Yahoo Finance using [yfinance](https://github.com/ranaroussi/yfinance). This server provides a set of tools to fetch stock data, news, and other financial information.
 
 <a href="https://glama.ai/mcp/servers/@narumiruna/yfinance-mcp">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/@narumiruna/yfinance-mcp/badge" />
 </a>
+
+## Deploy your own remote instance on Render.com
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+## Local Setup
+
+For a local MCP server setup for Claude Desktop, refer these [steps](https://github.com/narumiruna/yfinance-mcp?tab=readme-ov-file#usage).
 
 ## Tools
 
@@ -43,8 +51,8 @@ A simple MCP server for Yahoo Finance using [yfinance](https://github.com/ranaro
     - `period` (string, optional): Time period to retrieve data for (e.g. '1d', '1mo', '1y'). Default is '1mo'.
     - `interval` (string, optional): Data interval frequency (e.g. '1d', '1h', '1m'). Default is '1d'.
 
-## Usage
 
+<!-- 
 You can use this MCP server either via uv (Python package installer) or Docker.
 
 ### Via uv
@@ -75,4 +83,4 @@ Add the following configuration to your MCP server configuration file:
       "args": ["run", "-i", "--rm", "narumi/yfinance-mcp"]
     }
   }
-}
+} -->
