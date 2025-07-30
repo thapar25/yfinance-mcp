@@ -1,0 +1,15 @@
+previews:
+  generation: automatic # Enable preview environments
+
+services:
+- type: web
+  name: YFinance-MCP
+  runtime: docker
+  repo: https://github.com/thapar25/yfinance-mcp.git
+  plan: free
+  region: oregon
+  healthCheckPath: /health
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  autoDeployTrigger: commit
+version: "1"

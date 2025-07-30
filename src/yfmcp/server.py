@@ -3,9 +3,10 @@ from datetime import datetime
 from typing import Annotated
 
 import yfinance as yf
+from fastmcp import FastMCP
 from loguru import logger
-from mcp.server.fastmcp import FastMCP
 from pydantic import Field
+from starlette.responses import JSONResponse
 from yfinance.const import SECTOR_INDUSTY_MAPPING
 
 from yfmcp.types import Interval
@@ -198,5 +199,15 @@ def get_price_history(
     return df.to_markdown()
 
 
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request):
+    """
+    Health check endpoint to verify server status.
+    Returns:
+        JSONResponse: A JSON response indicating the server status.
+    """
+    return JSONResponse({"status": "healthy"})
+
+
 def main() -> None:
-    mcp.run()
+    mcp.run(transport="streamable-http", host="0.0.0.0", port=10000)
