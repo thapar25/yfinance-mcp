@@ -8,7 +8,7 @@ A simple MCP server for Yahoo Finance using [yfinance](https://github.com/ranaro
 
 ## Deploy your own remote instance on Render.com
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fthapar25%2Fyfinance-mcp)
 
 ## Local Setup
 
